@@ -54,16 +54,10 @@ mystr = str(todaydate) + "-"
 mystr = mystr.replace('-','/')
 mystr
 
-testing = r'cmd /k Azcopy copy "https://ayanadatalake.blob.core.windows.net/trnl/TRNL_Realtime/' + mystr + r'*?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2024-01-01T15:37:16Z&st=2022-08-17T07:37:16Z&spr=https&sig=yxvlbw1EnST1yQz4bFlFH5iQj32E6WArE2SUOXpUGvo%3D"'+ " " + r'"C:\Users\Piyush\LocalDTrnl\TrnlAzureLocalD'+ str('\\') + str(todaydate) + r'"' +" " + r"--recursive"
+testing = r'cmd /k Azcopy copy "https://ayanadatalake.blob.core.windows.net/trnl/TRNL_Realtime/' + mystr + r'*?sv=2021-06-08&ss=bfqt&srt=sco&sp=rwdlacupyx&se=2024-01-01T15:37:16Z&st=2022-08-17T07:37:16Z&spr=https&sig=yxvlbw1EnST1yQz4bFlFH5iQj32E6WArE2SUOXpUGvo%3D"'+ " " + r'"D:\OneDrive - Ayana Renewable Power private Limited\Desktop\LocalDTrnl\TrnlAzureLocalD'+ str('\\') + str(todaydate) + r'"' +" " + r"--recursive"
 testing
 
 import subprocess
-process = subprocess.Popen(testing,shell=True ,stdin=subprocess.PIPE,stdout=subprocess.PIPE,cwd=r'C:\Users\PIYUSH\azcopy_windows_amd64_10.16.0',stderr=subprocess.PIPE)
+process = subprocess.Popen(testing,shell=True ,stdin=subprocess.PIPE,stdout=subprocess.PIPE,cwd=r'D:\OneDrive - Ayana Renewable Power private Limited\Desktop\LocalDTrnl\azcopy_windows_amd64_10.16.0',stderr=subprocess.PIPE)
 o,e=process.communicate()
 print(o)           
-                                        
-                                        
-                                        
-                                        
-                                        
-                                        

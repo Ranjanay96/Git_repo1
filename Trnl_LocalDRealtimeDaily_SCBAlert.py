@@ -28,7 +28,7 @@ import pytz
 tz_india = pytz.timezone('Asia/Kolkata') 
 datetime_Now = datetime.now(tz_india)
 print("NY time:", datetime_Now.strftime('%Y-%m-%d %H:%M:%S.%f'))
-before_time=(datetime.now(tz_india)-timedelta(minutes=15)) # change time detla according to frequency of alert
+before_time=(datetime.now(tz_india)-timedelta(minutes=20)) # change time detla according to frequency of alert
 before_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 
 LoopCounter=1
@@ -54,11 +54,11 @@ df_final = pd.DataFrame()
 tz_india = pytz.timezone('Asia/Kolkata') 
 datetime_Now = datetime.now(tz_india)
 print("IST time:", datetime_Now.strftime('%Y-%m-%d %H:%M:%S.%f'))
-before_time=(datetime.now(tz_india)-timedelta(minutes=15)) # change time detla according to frequency of alert
+before_time=(datetime.now(tz_india)-timedelta(minutes=20)) # change time detla according to frequency of alert
 before_time.strftime('%Y-%m-%d %H:%M:%S.%f')
-path_len=len(r'"C:\Users\Piyush\LocalDTrnl\TrnlAzureLocalD\'')
+path_len=len(r'"D:\OneDrive - Ayana Renewable Power private Limited\Desktop\LocalDTrnl\TrnlAzureLocalD\'')
 print(path_len)
-path = r'"C:\Users\Piyush\LocalDTrnl\TrnlAzureLocalD\''+ str(todaydate) + r'\"'
+path = r'"D:\OneDrive - Ayana Renewable Power private Limited\Desktop\LocalDTrnl\TrnlAzureLocalD\''+ str(todaydate) + r'\"'
 print(path,len(path))
 path_new=path[1:path_len-1]+path[(path_len):len(path)-1]
 #path_new
@@ -135,12 +135,19 @@ current_time=datetime_Now.strftime('%Y-%m-%d %H:%M:%S.%f')
 print(current_time)
 before_time=before_time.strftime('%Y-%m-%d %H:%M:%S.%f')
 print(before_time)
-five_min_before_time=five_min_before_time=(datetime.now(tz_india)-timedelta(minutes=15)).strftime('%Y-%m-%d %H:%M:%S.%f')
+five_min_before_time=five_min_before_time=(datetime.now(tz_india)-timedelta(minutes=20)).strftime('%Y-%m-%d %H:%M:%S.%f')
 df=df[(df["timestamp"]<=str(current_time)) & (df["timestamp"]>=str(five_min_before_time))]
 df.tail()
 df.head()
+print("Current Time is",current_time)
+print("five min before time is",five_min_before_time)
+print("Random Tag From Check",df[df["itemname"]=="ICR_01..Inv_01_PV_01_Current"]["timestamp"].head(1))
+print("Random Tag To Check",df[df["itemname"]=="ICR_01..Inv_01_PV_01_Current"]["timestamp"].tail(1))
+print("Random Tag No of Data Points in 15 min came actually",len(df[df["itemname"]=="ICR_01..Inv_01_PV_01_Current"]))
 
-
+print("Radiation Tag From Check",df[df["itemname"]=="MCR..WMS_Pyranometer_GII"]["timestamp"].head(1))
+print("RadiationTag To Check",df[df["itemname"]=="MCR..WMS_Pyranometer_GII"]["timestamp"].tail(1))
+print("Radiation Tag No of Data Points in 15 min came actually",len(df[df["itemname"]=="MCR..WMS_Pyranometer_GII"]))
 df_scb=df.copy()
 df1=df.copy()
 df2=df.copy()
@@ -168,7 +175,7 @@ print("FaultyList",faulty_scb_list)
 
 columns=["Tagname"]
 df_scb=pd.DataFrame(faulty_scb_list,columns=columns)
-df_scb.to_excel("C:\\Users\\Piyush\\OneDrive\\LocalD\\Trnl\\TrnlSCB_Alerts.xlsx",index=False)
+df_scb.to_excel("C:\Users\RanjanKeshri\Downloads\Trnl\Trnl_Local_Output\TrnlSCB_Alerts.xlsx",index=False)
 
 Radiation_Block1 = Radiation_Block1[(Radiation_Block1["timestamp"]<=str(current_time)) & (Radiation_Block1["timestamp"]>=str(five_min_before_time))]
 Radiation_max = Radiation_Block1['value'].max()
@@ -180,20 +187,21 @@ print(Radiation_Block1)
 
 
 
-if (len(all_faulty_scb) > 0) and (Radiation_max > 50):
-    md1 = {'Date':str(todaydate),'SCB':faulty_scb_list,'From':str(before_time),'To':(current_time),'Radiation_Sum':Radiation_sum}
-    dfa = pd.DataFrame(md1)
-    db = pd.read_excel('C:\\Users\\Piyush\\OneDrive\\LocalD\\Trnl\\TrnlFaultySCBsDB_Loss.xlsx')
-    db = db.append(dfa)
-    db.to_excel('C:\\Users\\Piyush\\OneDrive\\LocalD\\Trnl\\TrnlFaultySCBsDB_Loss.xlsx',index = False)
-    import pymsteams
-    TrnlFaultySCBs = ''
-    for i in faulty_scb_list:
-        TrnlFaultySCBs+=i+'\n\n'
-    TrnlFaultySCBs
-    x="**Faulty SCB(s):**"+"\r\n\r"+(TrnlFaultySCBs[:-2])
-    myTeamsMessage = pymsteams.connectorcard("https://ayanapower.webhook.office.com/webhookb2/0472b42e-7f66-444d-a4b0-99f6157238dd@59b60474-e282-44b5-881c-bb9ce815690c/IncomingWebhook/d76fb77a3f154af180edee6009f8247e/0a64ab19-2984-4746-9447-21882231bb32")
-    myTeamsMessage.text(str(x))  
-    myTeamsMessage.send()
+# if (len(all_faulty_scb) > 0) and (Radiation_max > 50):
+#     md1 = {'Date':str(todaydate),'SCB':faulty_scb_list,'From':str(before_time),'To':(current_time),'Radiation_Sum':Radiation_sum}
+#     dfa = pd.DataFrame(md1)
+#     db = pd.read_excel('C:\Users\RanjanKeshri\Downloads\Trnl\Trnl_Local_Output.xlsx')
+#     db = db.append(dfa)
+#     db.to_excel('C:\Users\RanjanKeshri\Downloads\Trnl\Trnl_Local_Output.xlsx',index = False)
+#     import pymsteams
+#     TrnlFaultySCBs = ''
+#     for i in faulty_scb_list:
+#         TrnlFaultySCBs+=i+'\n\n'
+#     TrnlFaultySCBs
+#     x="**Faulty SCB(s):**"+"\r\n\r"+(TrnlFaultySCBs[:-2])
+#     myTeamsMessage = pymsteams.connectorcard("https://ayanapower.webhook.office.com/webhookb2/0472b42e-7f66-444d-a4b0-99f6157238dd@59b60474-e282-44b5-881c-bb9ce815690c/IncomingWebhook/d76fb77a3f154af180edee6009f8247e/0a64ab19-2984-4746-9447-21882231bb32")
+#     myTeamsMessage.text(str(x))  
+#     myTeamsMessage.send()
 
 print(len(faulty_scb_list))
+
